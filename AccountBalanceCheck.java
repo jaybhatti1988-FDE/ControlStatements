@@ -1,4 +1,4 @@
-package com.java.fde.basiccontrol.staments.examples;
+package com.java.fde.basiccontrol.staments.examples.two;
 
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ public class AccountBalanceCheck {
 		Scanner sc = new Scanner(System.in);
 
         System.out.println("╔══════════════════════════════════════════╗");
-        System.out.println("║      BANK WITHDRAWAL CHECK SYSTEM        ║");
+        System.out.println("║      BANK BALANCE STATUS CHECK SYSTEM    ║");
         System.out.println("╚══════════════════════════════════════════╝");
 
         // --- Input ---
@@ -22,8 +22,8 @@ public class AccountBalanceCheck {
         System.out.print("Enter Current Balance (₹)   :- ");
         double balance = sc.nextDouble();
 
-        System.out.print("Enter Withdrawal Amount (₹) :- ");
-        double withdrawAmount = sc.nextDouble();
+        System.out.print("Enter Minimum Balance Amount (₹) :- ");
+        double minBal = sc.nextDouble();
 
         System.out.println("\n------------------------------------------");
         System.out.println("         WITHDRAWAL TRANSACTION           ");
@@ -31,37 +31,22 @@ public class AccountBalanceCheck {
         System.out.println("Account Holder   : " + name);
         System.out.println("Account Number   : " + accNo);
         System.out.printf ("Current Balance  : ₹%.2f%n", balance);
-        System.out.printf ("Withdraw Amount  : ₹%.2f%n", withdrawAmount);
+        System.out.printf ("Withdraw Amount  : ₹%.2f%n", minBal);
         System.out.println("------------------------------------------");
 
         // --- Validation ---
-        if (withdrawAmount <= 0) {
+        if (balance <= 0 || minBal<0) {
 
-            System.out.println("❌ Invalid Amount! Withdrawal amount must be greater than zero.");
+            System.out.println(" Invalid Amount! amount must be greater than zero.");
 
-        } else if (withdrawAmount > balance) {
+        } else if (balance < minBal) {
 
-            System.out.println("❌ Insufficient Balance!");
-            System.out.println("   Transaction Failed.");
-            System.out.printf ("   You need ₹%.2f more to complete this withdrawal.%n",
-                               withdrawAmount - balance);
-            System.out.printf ("   Available Balance : ₹%.2f%n", balance);
-
-        } else if (withdrawAmount == balance) {
-
-            double remainingBalance = balance - withdrawAmount;
-            System.out.println("⚠️  Warning : You are withdrawing your entire balance!");
-            System.out.println("✅  Transaction Successful!");
-            System.out.printf ("    Amount Withdrawn  : ₹%.2f%n", withdrawAmount);
-            System.out.printf ("    Remaining Balance : ₹%.2f%n", remainingBalance);
-
-        } else {
-
-            double remainingBalance = balance - withdrawAmount;
-            System.out.println("✅  Transaction Successful!");
-            System.out.printf ("    Amount Withdrawn  : ₹%.2f%n", withdrawAmount);
-            System.out.printf ("    Remaining Balance : ₹%.2f%n", remainingBalance);
-
+            System.out.println("WARNING: Balance is below the minimum required balance!");
+            System.out.printf ("Shortfall        : ₹%.2f%n", minBal - balance);
+            System.out.println("Please deposit the shortfall to avoid penalty charges.");
+        } else {          
+            System.out.println("Minimum balance requirement is satisfied.");
+            System.out.printf ("Surplus Balance  : ₹%.2f%n", balance - minBal);
         }
 
         System.out.println("------------------------------------------");
